@@ -1,6 +1,6 @@
 package game;
 
-public class Enemy {
+public class Enemy implements Mortal{
     private String name;
     private int health;
 
@@ -9,8 +9,17 @@ public class Enemy {
         this.health = health;
     }
     public void takeDamage(int damage){
+        if(isAlive() && health <= damage){
+            health = 0;
+            System.out.println(getName() + " побеждён");
+        } else {
         this.health -= Math.min(health,damage);
         System.out.println(name + " получил урон " + damage + ".Осталось " + health + " здоровья");
+        }
+    }
+    @Override
+    public boolean isAlive() {
+        return health > 0;
     }
     public String getName() {
         return name;
@@ -21,4 +30,5 @@ public class Enemy {
     public void setHealth(int health) {
         this.health = health;
     }
+
 }
